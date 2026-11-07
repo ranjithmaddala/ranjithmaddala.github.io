@@ -1,0 +1,167 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>On My Way | Email Verification</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #eaf2ff, #f5f7fb);
+            color: #263247;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 460px;
+            padding: 45px 30px;
+            text-align: center;
+            background: #ffffff;
+            border-radius: 18px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.09);
+        }
+
+        .logo {
+            font-size: 30px;
+            font-weight: bold;
+            color: #2563eb;
+            margin-bottom: 30px;
+        }
+
+        .icon {
+            width: 75px;
+            height: 75px;
+            margin: 0 auto 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 38px;
+        }
+
+        .success {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+
+        .failure {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        h1 {
+            margin: 0 0 14px;
+            font-size: 26px;
+        }
+
+        p {
+            color: #64748b;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .button {
+            display: inline-block;
+            margin-top: 22px;
+            padding: 14px 28px;
+            border-radius: 8px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .button:hover {
+            background: #1d4ed8;
+        }
+
+        .footer {
+            margin-top: 35px;
+            font-size: 12px;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="logo">On My Way</div>
+
+    <div id="statusIcon" class="icon">✉</div>
+
+    <h1 id="heading">Checking your verification...</h1>
+
+    <p id="message">
+        Please wait while we check the result of your email verification.
+    </p>
+
+    <a id="actionButton" class="button"
+       href="https://github.com/ranjithmaddala"
+       style="display:none;">
+        Visit On My Way
+    </a>
+
+    <div class="footer">
+        © 2026 On My Way. All rights reserved.
+    </div>
+</div>
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+
+    const success = params.get("success");
+    const auth0Message = params.get("message");
+
+    const icon = document.getElementById("statusIcon");
+    const heading = document.getElementById("heading");
+    const message = document.getElementById("message");
+    const button = document.getElementById("actionButton");
+
+    if (success === "true") {
+        icon.textContent = "✓";
+        icon.classList.add("success");
+
+        heading.textContent = "Email Verified Successfully!";
+
+        message.textContent =
+            "Congratulations! Your email address has been verified. " +
+            "Thank you for joining On My Way. Your account is one step closer to being ready.";
+
+        button.style.display = "inline-block";
+
+    } else if (success === "false") {
+        icon.textContent = "!";
+        icon.classList.add("failure");
+
+        heading.textContent = "Verification Unsuccessful";
+
+        message.textContent =
+            auth0Message ||
+            "Your verification link may have expired or already been used. " +
+            "Please request a new verification email.";
+
+    } else {
+        icon.textContent = "✉";
+        heading.textContent = "Email Verification";
+
+        message.textContent =
+            "This page displays the result after you click the verification link " +
+            "sent to your email. Please open that link to verify your account.";
+    }
+</script>
+
+</body>
+</html>
